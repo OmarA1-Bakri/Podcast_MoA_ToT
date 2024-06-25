@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Podcast Generator Flow Diagram</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .diagram { display: flex; flex-direction: column; align-items: center; }
+        .step { margin: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; text-align: center; }
+        .arrow { font-size: 24px; }
+        .agent { background-color: #e6f3ff; }
+        .process { background-color: #fff0e6; }
+        .output { background-color: #e6ffe6; }
+    </style>
+</head>
+<body>
+    <div class="diagram">
+        <div class="step process">RSS Feed Processing</div>
+        <div class="arrow">↓</div>
+        <div class="step agent">News Editor Agent</div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Worker Agents (3x)
+            <div>Tree of Thought Processing</div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Journalist Agent</div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Worker Agents (3x)
+            <div>Tree of Thought Processing</div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Script Agent</div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Worker Agents (3x)
+            <div>Tree of Thought Processing</div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="step agent">Chief Editor Agent</div>
+        <div class="arrow">↓</div>
+        <div class="step output">Generate Markdown</div>
+        <div class="arrow">↓</div>
+        <div class="step output">Update CSV</div>
+    </div>
+</body>
+</html>
