@@ -39,7 +39,8 @@
             font-size: 12px;
             fill: white;
             text-anchor: middle;
-            dominant-baseline: middle;
+            dominant-baseline: central;
+            alignment-baseline: central;
         }
         .link {
             fill: none;
@@ -179,10 +180,11 @@
                 .style("fill", "white");
 
             // Add RSS Feed node
-            svg.append("g")
+            const rssFeedNode = svg.append("g")
                 .attr("class", "node")
-                .attr("transform", `translate(${root.x},${20})`)
-                .append("rect")
+                .attr("transform", `translate(${root.x},${20})`);
+
+            rssFeedNode.append("rect")
                 .attr("width", 120)
                 .attr("height", 40)
                 .attr("x", -60)
@@ -191,8 +193,7 @@
                 .attr("ry", 5)
                 .style("fill", "#2ecc71");
 
-            svg.select(".node:last-of-type")
-                .append("text")
+            rssFeedNode.append("text")
                 .attr("dy", "0.35em")
                 .attr("text-anchor", "middle")
                 .text("RSS Feed")
@@ -238,4 +239,3 @@
     </script>
 </body>
 </html>
-
