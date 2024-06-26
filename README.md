@@ -51,8 +51,8 @@ The system is composed of several key components:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/AI_News_Podcast_Script_Generator.git
-   cd AI-News-Podcast-Script-Generator
+   git clone https://github.com/yourusername/Podcast_MoA_ToT.git
+   cd Podcast_MoA_ToT
    ```
 
 2. Create a virtual environment and activate it:
