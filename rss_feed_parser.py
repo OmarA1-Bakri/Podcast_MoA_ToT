@@ -5,8 +5,8 @@ This module provides functionality to parse RSS feeds and extract top stories
 for the AI News Podcast Generation System.
 """
 
-import feedparser
-from typing import List, Dict
+import requests
+from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import logging
 
@@ -27,22 +27,21 @@ class RSSFeedParser:
         feed_url (str): The URL of the RSS feed to parse.
     """
 
-    def __init__(self, feed_url: str):
+    def __init__(self, url):
         """
         Initialize the RSSFeedParser.
 
         Args:
-            feed_url (str): The URL of the RSS feed to parse.
+            url (str): The URL of the website to scrape for news.
         """
-        self.feed_url = feed_url
+        self.url = url
 
-    def get_top_stories(self, num_stories: int = 10, days: int = 7) -> List[Dict]:
+    def get_top_stories(self, num_stories=10, days=7):
         """
-        Fetch and process top stories from the RSS feed.
+        Fetch and process top stories from the website.
 
-        This method retrieves stories from the RSS feed, filters them based on
-        recency, sorts them by popularity (currently using the number of comments
-        as a proxy for popularity), and returns the top stories.
+        This method retrieves stories from the website, filters them based on
+        recency, and returns the top stories.
 
         Args:
             num_stories (int, optional): The number of top stories to return. Defaults to 10.
@@ -53,45 +52,38 @@ class RSSFeedParser:
                         contains 'title', 'link', 'summary', and 'published' keys.
 
         Raises:
-            RSSFeedError: If there's an error parsing the RSS feed or processing the stories.
+            RSSFeedError: If there's an error fetching or parsing the news content.
         """
         try:
-            # Parse the RSS feed
-            feed = feedparser.parse(self.feed_url)
-            
-            if feed.bozo:
-                raise RSSFeedError(f"Error parsing RSS feed: {feed.bozo_exception}")
-            
-            # Calculate the cutoff date for recent stories
-            cutoff_date = datetime.now() - timedelta(days=days)
-            
-            # Filter stories from the last 'days' days
-            recent_stories = [
-                entry for entry in feed.entries
-                if datetime(*entry.published_parsed[:6]) > cutoff_date
-            ]
-            
-            # Sort stories by popularity (using number of comments as a proxy)
-            # Note: This sorting method may need to be adjusted based on the actual RSS feed structure
-            sorted_stories = sorted(recent_stories, key=lambda x: len(x.get('comments', [])), reverse=True)
-            
-            # Select the top N stories
-            top_stories = sorted_stories[:num_stories]
-            
-            # Format the stories for output
-            return [
-                {
-                    'title': story.title,
-                    'link': story.link,
-                    'summary': story.summary,
-                    'published': story.published
-                }
-                for story in top_stories
-            ]
-        except RSSFeedError as e:
-            logger.error(f"RSS Feed Error: {str(e)}")
-            raise
-        except Exception as e:
-            logger.error(f"Unexpected error in RSS Feed Parser: {str(e)}")
-            raise RSSFeedError(f"Unexpected error in RSS Feed Parser: {str(e)}")
+            response = requests.get(self.url)
+            response.raise_for_status()
 
+            soup = BeautifulSoup(response.content, 'html.parser')
+            news_items = soup.find_all('div', class_='news-item')
+
+            stories = []
+            for item in news_items[:num_stories]:
+                title = item.find('h3', class_='news-title').text.strip()
+                summary = item.find('p', class_='news-summary').text.strip()
+                link = item.find('a', class_='news-link')['href']
+                date_str = item.find('span', class_='news-date').text.strip()
+                
+                # Parse the date (adjust the format as needed)
+                pub_date = datetime.strptime(date_str, "%B %d, %Y")
+                
+                if pub_date > (datetime.now() - timedelta(days=days)):
+                    stories.append({
+                        'title': title,
+                        'summary': summary,
+                        'link': link,
+                        'published': pub_date
+                    })
+
+            return stories
+
+        except requests.RequestException as e:
+            logger.error(f"Error fetching news: {str(e)}")
+            raise RSSFeedError(f"Error fetching news: {str(e)}")
+        except Exception as e:
+            logger.error(f"Error parsing news content: {str(e)}")
+            raise RSSFeedError(f"Error parsing news content: {str(e)}")

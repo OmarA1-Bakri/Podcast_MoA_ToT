@@ -9,7 +9,7 @@ import requests
 from typing import List, Tuple
 from dotenv import load_dotenv
 import os
-from tavily import TavilyClient
+from tavily import Client as TavilyClient
 import logging
 
 load_dotenv()

@@ -44,30 +44,33 @@ class MoAFramework:
             "script_writer": ManagerAgent("Script Writer", "Script Writer", tavily_api_key)
         }
         self.worker_agents = {
-            agent_type: [WorkerAgent(f"{agent_type}_Worker_{i}", tavily_api_key) for i in range(1, 4)]
-            for agent_type in ["news_editor", "journalist", "script_writer"]
+            "news_editor": [WorkerAgent(f"news_editor_Worker_{i}", tavily_api_key) for i in range(1, Config.MAX_WORKERS + 1)],
+            "journalist": [WorkerAgent(f"journalist_Worker_{i}", tavily_api_key) for i in range(1, Config.MAX_WORKERS + 1)],
+            "script_writer": [WorkerAgent(f"script_writer_Worker_{i}", tavily_api_key) for i in range(1, Config.MAX_WORKERS + 1)]
         }
 
     def process_worker_layer(self, agent_type: str, input: str) -> str:
         """
-        Process input through a layer of worker agents in parallel.
-
-        This method distributes the input to all worker agents of a specific type,
-        processes them in parallel, and then synthesizes the results using the corresponding manager agent.
+        Process input through a layer of worker agents.
 
         Args:
-            agent_type (str): The type of worker agents to use (e.g., "news_editor", "journalist", "script_writer").
-            input (str): The input text to be processed by the worker agents.
+            agent_type (str): The type of worker agents to use.
+            input (str): The input to process.
 
         Returns:
-            str: The synthesized output from the manager agent after processing worker outputs.
+            str: The processed output from the worker layer.
 
         Raises:
-            Exception: If there's an error in worker processing or manager synthesis.
+            ValueError: If the agent_type is not recognized.
         """
+        if agent_type not in self.worker_agents:
+            raise ValueError(f"Unknown worker agent type: {agent_type}")
+        if agent_type not in self.manager_agents:
+            raise ValueError(f"Unknown manager agent type: {agent_type}")
+
+        worker_outputs = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=Config.MAX_WORKERS) as executor:
             future_to_worker = {executor.submit(worker.process, input): worker for worker in self.worker_agents[agent_type]}
-            worker_outputs = []
             for future in concurrent.futures.as_completed(future_to_worker):
                 worker = future_to_worker[future]
                 try:
@@ -116,4 +119,3 @@ class MoAFramework:
         except Exception as e:
             logger.error(f"Error in generate_podcast_script: {str(e)}")
             raise
-

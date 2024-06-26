@@ -5,13 +5,13 @@ load_dotenv()
 
 class Config:
     # RSS Feed settings
-    RSS_FEED_URL = os.getenv("RSS_FEED_URL", "https://example.com/ai_news_rss_feed")
+    RSS_FEED_URL = "https://www.futuretools.io/news"
     NUM_STORIES = 10
     DAYS_LOOKBACK = 7
 
     # Agent settings
-    CHIEF_EDITOR_MODEL = "claude-3-sonnet-20240320"
-    MANAGER_MODEL = "claude-3-sonnet-20240320"
+    CHIEF_EDITOR_MODEL = "claude-3-5-sonnet-20240620"
+    MANAGER_MODEL = "claude-3-5-sonnet-20240620"
     WORKER_MODEL = "claude-3-haiku-20240307"
     TOT_MAX_DEPTH = 2
     TOT_BRANCHING_FACTOR = 2
@@ -32,4 +32,3 @@ class Config:
         missing_vars = [var for var in required_env_vars if not getattr(cls, var)]
         if missing_vars:
             raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
-
