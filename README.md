@@ -51,14 +51,21 @@ The system is composed of several key components:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/ai-news-podcast-generator.git
-   cd ai-news-podcast-generator
+   git clone https://github.com/yourusername/AI_News_Podcast_Script_Generator.git
+   cd AI-News-Podcast-Script-Generator
    ```
 
 2. Create a virtual environment and activate it:
    ```
    python -m venv venv
    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+
+   or Conda
+
+   conda create -n aipodgen python==3.11
+
+   conda activate aipodgen 
+
    ```
 
 3. Install the required dependencies:
