@@ -1,6 +1,6 @@
 # AI News Podcast Script Generator
 
-This project implements an AI-powered system for generating podcast scripts based on the latest AI news. It uses a Mix of Agents (MoA) framework combined with a Tree of Thought (ToT) algorithm to process news from RSS feeds and create engaging podcast content.
+This project implements an AI-powered system for generating podcast scripts based on the latest NEWS. It uses a Mix of Agents (MoA) framework combined with a Tree of Thought (ToT) algorithm to process news from RSS feeds and create engaging podcast content.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ This project implements an AI-powered system for generating podcast scripts base
 
 The system is composed of several key components:
 
-1. **RSS Feed Parser**: Fetches and processes top AI news stories from specified RSS feeds.
+1. **RSS Feed Parser**: THIS IS IMPORTANT. YOU WILL NEED TO UPDATE THIS FILE WITH YOUR RSS FEED. THIS APP WILL NOT WORK OTHERWISE
 
 2. **Mix of Agents (MoA) Framework**: Coordinates different types of agents to process the news and generate the script.
 
