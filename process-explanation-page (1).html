@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Podcast Generation Process</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .process-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .step {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #ecf0f1;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        .step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        .step h2 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        .agent {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9em;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>AI News Podcast Generation Process</h1>
+    <div class="process-container">
+        <div class="step">
+            <h2>Step 1: RSS Feed Parsing</h2>
+            <p>The process begins by fetching and parsing the top AI news stories from an RSS feed. This step uses the <span class="agent">RSS Feed Parser</span> to retrieve the most recent and popular articles.</p>
+        </div>
+        <div class="step">
+            <h2>Step 2: News Editor Layer</h2>
+            <p>The parsed news stories are then processed by the News Editor layer. This layer consists of:</p>
+            <ul>
+                <li><span class="agent">News Editor Manager</span></li>
+                <li>Multiple <span class="agent">News Editor Workers</span></li>
+            </ul>
+            <p>The workers process the stories in parallel, and the manager synthesizes their outputs.</p>
+        </div>
+        <div class="step">
+            <h2>Step 3: Journalist Layer</h2>
+            <p>The output from the News Editor layer is passed to the Journalist layer, which includes:</p>
+            <ul>
+                <li><span class="agent">Journalist Manager</span></li>
+                <li>Multiple <span class="agent">Journalist Workers</span></li>
+            </ul>
+            <p>This layer refines the content and adds journalistic perspective to the stories.</p>
+        </div>
+        <div class="step">
+            <h2>Step 4: Script Writer Layer</h2>
+            <p>The Journalist layer's output is then processed by the Script Writer layer:</p>
+            <ul>
+                <li><span class="agent">Script Writer Manager</span></li>
+                <li>Multiple <span class="agent">Script Writer Workers</span></li>
+            </ul>
+            <p>This layer transforms the content into a podcast script format.</p>
+        </div>
+        <div class="step">
+            <h2>Step 5: Chief Editor Review</h2>
+            <p>Finally, the <span class="agent">Chief Editor Agent</span> reviews and refines the script, ensuring it meets quality standards and is ready for production.</p>
+        </div>
+    </div>
+</body>
+</html>
+
